@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DbContexts\**" />
+    <Content Remove="DbContexts\**" />
+    <EmbeddedResource Remove="DbContexts\**" />
+    <None Remove="DbContexts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="DbContexts\ApplicationDbContexts.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
@@ -26,6 +37,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mango.Services.ProductAPI.Models\Mango.Services.ProductAPI.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

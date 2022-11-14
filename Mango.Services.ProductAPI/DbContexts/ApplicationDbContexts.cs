@@ -1,6 +1,5 @@
-﻿using Mango.Services.ProductAPI.Models;
+﻿using Mango.Services.ProductAPI.Models.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace Mango.Services.ProductAPI.DbContexts
 {
