@@ -39,8 +39,4 @@
     <ProjectReference Include="..\Mango.Services.ProductAPI.Models\Mango.Services.ProductAPI.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
