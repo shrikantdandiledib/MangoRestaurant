@@ -1,12 +1,16 @@
-﻿using Mango.Services.ProductAPI.DTO;
+﻿
+using Mango.Services.ProductAPI.Helpers;
+using Mango.Services.ProductAPI.Models.DTO;
+using Mango.Services.ProductAPI.Models.Helpers;
 using Mango.Services.ProductAPI.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Mango.Services.ProductAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductAPIController : ControllerBase
     {
@@ -17,10 +21,11 @@ namespace Mango.Services.ProductAPI.Controllers
             this.productRepository = productRepository;
         }
         // GET: api/<ProductAPIController>
+        [Authorize]
         [HttpGet]
-        public async Task<ServiceResponse<IEnumerable<ProductDTO>>> Get()
+        public async Task<APIResponse<IEnumerable<ProductDTO>>> Get()
         {
-            ServiceResponse<IEnumerable<ProductDTO>> serviceResponse = new ServiceResponse<IEnumerable<ProductDTO>>();
+            APIResponse<IEnumerable<ProductDTO>> serviceResponse = new APIResponse<IEnumerable<ProductDTO>>();
             try
             {
                 IEnumerable<ProductDTO> products = await productRepository.GetProducts();
@@ -29,17 +34,18 @@ namespace Mango.Services.ProductAPI.Controllers
             }
             catch (Exception ex)
             {
-                serviceResponse.Exception = ex.ToString();
+                serviceResponse.Exception = new List<string> { Convert.ToString(ex.Message) };
                 serviceResponse.Success = false;
             }
             return serviceResponse;
         }
 
         // GET api/<ProductAPIController>/5
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<ServiceResponse<ProductDTO>> Get(int id)
+        public async Task<APIResponse<ProductDTO>> Get(int id)
         {
-            ServiceResponse<ProductDTO> serviceResponse = new ServiceResponse<ProductDTO>();
+            APIResponse<ProductDTO> serviceResponse = new APIResponse<ProductDTO>();
             try
             {
                 ProductDTO products = await productRepository.GetProduct(id);
@@ -57,17 +63,18 @@ namespace Mango.Services.ProductAPI.Controllers
             }
             catch (Exception ex)
             {
-                serviceResponse.Exception = ex.ToString();
+                serviceResponse.Exception = new List<string> { Convert.ToString(ex.Message) };
                 serviceResponse.Success = false;
             }
             return serviceResponse;
         }
 
         // POST api/<ProductAPIController>
+        [Authorize]
         [HttpPost]
-        public async Task<ServiceResponse<ProductDTO>> Post([FromBody] ProductDTO productDTO)
+        public async Task<APIResponse<ProductDTO>> Post([FromBody] ProductDTO productDTO)
         {
-            ServiceResponse<ProductDTO> serviceResponse = new ServiceResponse<ProductDTO>();
+            APIResponse<ProductDTO> serviceResponse = new APIResponse<ProductDTO>();
             try
             {
                 ProductDTO products = await productRepository.CreateUpdateProduct(productDTO);
@@ -85,19 +92,20 @@ namespace Mango.Services.ProductAPI.Controllers
             }
             catch (Exception ex)
             {
-                serviceResponse.Exception = ex.ToString();
+                serviceResponse.Exception = new List<string> { Convert.ToString(ex.Message) };
                 serviceResponse.Success = false;
             }
             return serviceResponse;
         }
 
-       
+
 
         // DELETE api/<ProductAPIController>/5
+        [Authorize(Roles =ClientRoles.Admin)]
         [HttpDelete("{id}")]
-        public async Task<ServiceResponse<bool>> Delete(int id)
+        public async Task<APIResponse<bool>> Delete(int id)
         {
-            ServiceResponse<bool> serviceResponse = new ServiceResponse<bool>();
+            APIResponse<bool> serviceResponse = new APIResponse<bool>();
             try
             {
                 var products = await productRepository.DeleteProduct(id);
@@ -115,7 +123,7 @@ namespace Mango.Services.ProductAPI.Controllers
             }
             catch (Exception ex)
             {
-                serviceResponse.Exception = ex.ToString();
+                serviceResponse.Exception = new List<string> { Convert.ToString(ex.Message) };
                 serviceResponse.Success = false;
             }
             return serviceResponse;

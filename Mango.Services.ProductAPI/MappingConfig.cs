@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Mango.Services.ProductAPI.DTO;
+using Mango.Services.ProductAPI.Models.DTO;
 using Mango.Services.ProductAPI.Models.Models;
 
 namespace Mango.Services.ProductAPI

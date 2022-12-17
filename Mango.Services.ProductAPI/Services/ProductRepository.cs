@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Mango.Services.ProductAPI.DbContexts;
-using Mango.Services.ProductAPI.DTO;
+using Mango.Services.ProductAPI.Models.DTO;
 using Mango.Services.ProductAPI.Models.Models;
 using Mango.Services.ProductAPI.Repository;
 using Microsoft.EntityFrameworkCore;
