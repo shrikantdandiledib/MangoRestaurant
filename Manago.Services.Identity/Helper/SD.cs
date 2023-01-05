@@ -69,7 +69,7 @@ namespace Manago.Services.Identity.Helper
     }
     public static class RedirectUrls
     {
-        public const string MangoWebSigninURI = "http://localhost:44332/signin-oidc";
-        public const string MangoWebSignOutURI = "http://localhost:44332/signout-callback-oidc";
+        public const string MangoWebSigninURI = "https://localhost:44332/signin-oidc";
+        public const string MangoWebSignOutURI = "https://localhost:44332/signout-callback-oidc";
     }
 }

@@ -7,7 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+});
 // Add Database Connection
 builder.Services.AddDbContext<ApplicationDbContexts>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductDB")));
@@ -56,12 +60,21 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 app.UseIdentityServer();
+//app.Use(async (context, next) =>
+//{
+//    context.Response.Headers.Add("Content-Security-Policy", "connect-src *; img-src *; media-src *; script-src *");
+//    await next();
+//});
+//app.UseCookiePolicy(new CookiePolicyOptions()
+//{
+//    MinimumSameSitePolicy = SameSiteMode.Lax
+//});
+
 app.UseAuthorization();
 // Call method to initalize User Roles
 dbInitializer.Initialize();
