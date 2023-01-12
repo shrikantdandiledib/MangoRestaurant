@@ -1,7 +1,9 @@
+using Duende.IdentityServer.Services;
 using Manago.Services.Identity.DbContexts;
 using Manago.Services.Identity.Helper;
 using Manago.Services.Identity.Initializer;
 using Manago.Services.Identity.Models;
+using Manago.Services.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,11 +32,16 @@ var identityBuilder = builder.Services.AddIdentityServer(options =>
             .AddInMemoryApiScopes(SD.ApiScopes)
             .AddInMemoryClients(SD.Clients)
             .AddAspNetIdentity<ApplicationUser>();
+
+
+
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+
 // Signin Credentials for Development Purpose
 identityBuilder.AddDeveloperSigningCredential();
 
 #endregion
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 
 // Add services to the container.
