@@ -14,18 +14,19 @@ namespace Mango.Web.Services
         {
             this.clientFactory = clientFactory;
         }
-        public async Task<T> CreateProduct<T>(ProductDTO productDTO)
+        public async Task<T> CreateProduct<T>(ProductDTO productDTO,string accessToken)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 APIType = Constants.APIType.POST,
                 Data = productDTO,
                 Url = Constants.ProductAPIBase + "api/products",
+                //AccessToken = accessToken
                 AccessToken = ""
             });
         }
 
-        public async Task<T> DeleteProduct<T>(int id)
+        public async Task<T> DeleteProduct<T>(int id, string accessToken)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
@@ -35,33 +36,36 @@ namespace Mango.Web.Services
             });
         }
 
-        public async Task<T> GetAllProductsAsync<T>()
+        public async Task<T> GetAllProductsAsync<T>(string accessToken)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 APIType = Constants.APIType.GET,
                 Url = Constants.ProductAPIBase + "api/products",
+                //  AccessToken = accessToken
                 AccessToken = ""
             });
         }
 
-        public async Task<T> GetProductByIdAsync<T>(int id)
+        public async Task<T> GetProductByIdAsync<T>(int id, string accessToken)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 APIType = Constants.APIType.GET,
                 Url = Constants.ProductAPIBase + "api/products" + id,
+                //   AccessToken = accessToken
                 AccessToken = ""
             });
         }
 
-        public async Task<T> UpdateProduct<T>(ProductDTO productDTO)
+        public async Task<T> UpdateProduct<T>(ProductDTO productDTO, string accessToken)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 APIType = Constants.APIType.PUT,
                 Data = productDTO,
                 Url = Constants.ProductAPIBase + "api/products",
+                //   AccessToken = accessToken
                 AccessToken = ""
             });
         }
