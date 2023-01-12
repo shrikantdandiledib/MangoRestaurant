@@ -6,6 +6,7 @@ using Manago.Services.Identity.Models;
 using Manago.Services.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,17 +33,18 @@ var identityBuilder = builder.Services.AddIdentityServer(options =>
             .AddInMemoryApiScopes(SD.ApiScopes)
             .AddInMemoryClients(SD.Clients)
             .AddAspNetIdentity<ApplicationUser>();
-
-
-
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 
 // Signin Credentials for Development Purpose
 identityBuilder.AddDeveloperSigningCredential();
 
+
 #endregion
 
+
+// Signin Credentials for Development Purpose
+identityBuilder.AddDeveloperSigningCredential();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -66,24 +68,16 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    //IdentityModelEventSource.ShowPII = true;
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 app.UseIdentityServer();
-//app.Use(async (context, next) =>
-//{
-//    context.Response.Headers.Add("Content-Security-Policy", "connect-src *; img-src *; media-src *; script-src *");
-//    await next();
-//});
-//app.UseCookiePolicy(new CookiePolicyOptions()
-//{
-//    MinimumSameSitePolicy = SameSiteMode.Lax
-//});
-
+//app.UseAuthentication();
 app.UseAuthorization();
-// Call method to initalize User Roles
+
 dbInitializer.Initialize();
 app.MapControllerRoute(
     name: "default",

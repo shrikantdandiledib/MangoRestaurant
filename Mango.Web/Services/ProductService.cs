@@ -21,8 +21,8 @@ namespace Mango.Web.Services
                 APIType = Constants.APIType.POST,
                 Data = productDTO,
                 Url = Constants.ProductAPIBase + "api/products",
-                //AccessToken = accessToken
-                AccessToken = ""
+                AccessToken = accessToken
+                
             });
         }
 
@@ -32,7 +32,7 @@ namespace Mango.Web.Services
             {
                 APIType = Constants.APIType.POST,
                 Url = Constants.ProductAPIBase + "api/products"+id,
-                AccessToken = ""
+                AccessToken = accessToken
             });
         }
 
@@ -42,8 +42,7 @@ namespace Mango.Web.Services
             {
                 APIType = Constants.APIType.GET,
                 Url = Constants.ProductAPIBase + "api/products",
-                //  AccessToken = accessToken
-                AccessToken = ""
+                  AccessToken = accessToken
             });
         }
 
@@ -53,8 +52,7 @@ namespace Mango.Web.Services
             {
                 APIType = Constants.APIType.GET,
                 Url = Constants.ProductAPIBase + "api/products" + id,
-                //   AccessToken = accessToken
-                AccessToken = ""
+                  AccessToken = accessToken
             });
         }
 
@@ -65,8 +63,7 @@ namespace Mango.Web.Services
                 APIType = Constants.APIType.PUT,
                 Data = productDTO,
                 Url = Constants.ProductAPIBase + "api/products",
-                //   AccessToken = accessToken
-                AccessToken = ""
+                   AccessToken = accessToken
             });
         }
     }
