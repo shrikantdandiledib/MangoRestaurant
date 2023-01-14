@@ -1,6 +1,8 @@
 ﻿using Mango.Services.ProductAPI.Models.Helpers;
 using Mango.Web.Services.IServices;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -58,24 +60,71 @@ namespace Mango.Web.Services
                 }
                 responseMessage = await client.SendAsync(message);
                 var apiContent = await responseMessage.Content.ReadAsStringAsync();
-                var apiResponseDto = JsonConvert.DeserializeObject<T>(apiContent);
-                return apiResponseDto;
+                var isValidJson = IsValidJson(apiContent);
+                if (isValidJson)
+                {
+                    var apiResponseDto = JsonConvert.DeserializeObject<T>(apiContent);
+                    return apiResponseDto;
+                }
+                return CreateExceptionObject<T>(apiContent, "Exception Found", new List<string> { apiContent }, false);
+
             }
             catch (Exception e)
             {
-                var dto = new APIResponse<bool>
+                var dto = new APIResponse<object>
                 {
-                    Data = true,
-                    Message = "Error",
+                    Data = e.ToString(),
+                    Message = e.Message,
                     Exception = new List<string> { Convert.ToString(e.Message) },
                     Success = false,
                 };
-                var response = JsonConvert.SerializeObject(dto);
-                var apiResponseDto = JsonConvert.DeserializeObject<T>(response);
-                return apiResponseDto;
+                return CreateExceptionObject<T>(dto, e.Message, new List<string> { Convert.ToString(e.Message) }, false);
             }
         }
 
+        private static T CreateExceptionObject<T>(object apiContent, string message, List<string> exception, bool status)
+        {
+            var dto = new APIResponse<object>
+            {
+                Data = apiContent,
+                Message = "Exception Found",
+                Exception = exception,
+                Success = status,
+            };
+            var response = JsonConvert.SerializeObject(dto);
+            var apiResponseDto = JsonConvert.DeserializeObject<T>(response);
+            return apiResponseDto;
+        }
+
+        private static bool IsValidJson(string strInput)
+        {
+            if (string.IsNullOrWhiteSpace(strInput)) { return false; }
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    var obj = JToken.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    //Exception in parsing json
+                    Console.WriteLine(jex.Message);
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void Dispose()
         {
             GC.SuppressFinalize(true);
