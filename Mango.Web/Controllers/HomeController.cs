@@ -1,4 +1,7 @@
-﻿using Mango.Web.Models;
+﻿using Mango.Services.ProductAPI.Models.DTO;
+using Mango.Services.ProductAPI.Models.Helpers;
+using Mango.Web.Models;
+using Mango.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +12,23 @@ namespace Mango.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductService productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductService productService )
         {
             _logger = logger;
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<ProductDTO> products = new List<ProductDTO>();
+            var response = await productService.GetAllProductsAsync<APIResponse<List<ProductDTO>>>("");
+            if (response!=null&&response.Success)
+            {
+                products = response.Data;
+            }
+            return View(products);
         }
 
         public IActionResult Privacy()

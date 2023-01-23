@@ -21,7 +21,6 @@ namespace Mango.Services.ProductAPI.Controllers
             this.productRepository = productRepository;
         }
         // GET: api/<ProductAPIController>
-        [Authorize]
         [HttpGet]
         public async Task<APIResponse<IEnumerable<ProductDTO>>> Get()
         {
