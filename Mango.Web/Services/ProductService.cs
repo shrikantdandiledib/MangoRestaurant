@@ -31,7 +31,7 @@ namespace Mango.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 APIType = Constants.APIType.POST,
-                Url = Constants.ProductAPIBase + "api/products"+id,
+                Url = Constants.ProductAPIBase + "api/products/"+id,
                 AccessToken = accessToken
             });
         }
@@ -51,7 +51,7 @@ namespace Mango.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 APIType = Constants.APIType.GET,
-                Url = Constants.ProductAPIBase + "api/products" + id,
+                Url = Constants.ProductAPIBase + "api/products/" + id,
                   AccessToken = accessToken
             });
         }
