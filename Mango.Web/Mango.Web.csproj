@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mango.Services.ProductAPI.Models\Mango.Services.ProductAPI.Models.csproj" />
+    <ProjectReference Include="..\Mango.Services.ShoppingCartAPI.Models\Mango.Services.ShoppingCartAPI.Models.csproj" />
   </ItemGroup>
 
 </Project>

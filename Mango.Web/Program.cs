@@ -13,6 +13,7 @@ builder.Host.ConfigureLogging(logging =>
 // Add services to the container.
 builder.Services.AddHttpClient<IProductService, ProductService>();
 Constants.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"];
+Constants.ShoppingCartAPIBase = builder.Configuration["ServiceUrls:ShoppingCartAPI"];
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddControllersWithViews();
 

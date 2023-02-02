@@ -1,18 +1,17 @@
 using AutoMapper;
-using Mango.Services.ProductAPI;
-using Mango.Services.ProductAPI.DbContexts;
-using Mango.Services.ProductAPI.Models.Services;
-using Mango.Services.ProductAPI.Repository;
+using Mango.Services.ShoppingCart;
+using Mango.Services.ShoppingCart.DbContexts;
+using Mango.Services.ShoppingCart.IServices;
+using Mango.Services.ShoppingCart.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add Database Connection
 builder.Services.AddDbContext<ApplicationDbContexts>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductDB")));
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("ShoppingCartDB")));
 
 // Add AutoMapper in API
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
@@ -20,7 +19,7 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Inject Dependencies
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -48,7 +47,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mango.Services.ShoppingCartAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mango.Services.ProductAPI", Version = "v1" });
     c.EnableAnnotations();
     #region To Show that the API required Authentication and Authorization. It will show up the Authorization keyword and Popup for Creadentials on APIs
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -76,9 +75,10 @@ builder.Services.AddSwaggerGen(c =>
                         new List<string>()
                     }
 
-                }); 
+                });
     #endregion
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -86,7 +86,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
 }
 
 app.UseHttpsRedirection();
