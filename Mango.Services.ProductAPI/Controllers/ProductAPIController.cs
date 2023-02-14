@@ -1,7 +1,7 @@
 ﻿
+using Mango.Services.Helpers;
 using Mango.Services.ProductAPI.Helpers;
 using Mango.Services.ProductAPI.Models.DTO;
-using Mango.Services.ProductAPI.Models.Helpers;
 using Mango.Services.ProductAPI.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -100,7 +100,7 @@ namespace Mango.Services.ProductAPI.Controllers
 
 
         // DELETE api/<ProductAPIController>/5
-        [Authorize(Roles =ClientRoles.Admin)]
+        [Authorize(Roles = ClientRoles.Admin)]
         [HttpDelete("{id}")]
         public async Task<APIResponse<bool>> Delete(int id)
         {

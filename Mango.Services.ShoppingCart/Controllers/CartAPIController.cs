@@ -1,7 +1,6 @@
-﻿using Mango.Services.ShoppingCart.IServices;
+﻿using Mango.Services.Helpers;
+using Mango.Services.ShoppingCart.IServices;
 using Mango.Services.ShoppingCartAPI.Models.DTO;
-using Mango.Services.ShoppingCartAPI.Models.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mango.Services.ShoppingCart.Controllers
@@ -21,7 +20,7 @@ namespace Mango.Services.ShoppingCart.Controllers
         [HttpGet("GetCart/{userId}")]
         public async Task<object> GetCart(string userId)
         {
-           
+
             try
             {
                 var cartDto = await _cartRepository.GetCartByUserId(userId);

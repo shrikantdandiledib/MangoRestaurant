@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mango.Services.Helpers\Mango.Services.Helpers.csproj" />
     <ProjectReference Include="..\Mango.Services.ProductAPI.Models\Mango.Services.ProductAPI.Models.csproj" />
   </ItemGroup>
 

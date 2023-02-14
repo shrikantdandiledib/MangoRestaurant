@@ -1,12 +1,9 @@
-﻿using Mango.Services.ProductAPI.Models.Helpers;
+﻿using Mango.Services.Helpers;
 using Mango.Web.Services.IServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json.Serialization;
-using static Mango.Web.Helper.Constants;
 
 namespace Mango.Web.Services
 {
@@ -42,16 +39,16 @@ namespace Mango.Web.Services
                 HttpResponseMessage responseMessage = null;
                 switch (apiRequest.APIType)
                 {
-                    case APIType.GET:
+                    case Constants.APIType.GET:
                         message.Method = HttpMethod.Get;
                         break;
-                    case APIType.POST:
+                    case Constants.APIType.POST:
                         message.Method = HttpMethod.Post;
                         break;
-                    case APIType.PUT:
+                    case Constants.APIType.PUT:
                         message.Method = HttpMethod.Put;
                         break;
-                    case APIType.DELETE:
+                    case Constants.APIType.DELETE:
                         message.Method = HttpMethod.Delete;
                         break;
                     default:

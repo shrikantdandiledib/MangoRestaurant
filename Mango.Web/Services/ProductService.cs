@@ -1,8 +1,6 @@
-﻿using Mango.Services.ProductAPI.Models.DTO;
-using Mango.Services.ProductAPI.Models.Helpers;
-using Mango.Web.Helper;
+﻿using Mango.Services.Helpers;
+using Mango.Services.ProductAPI.Models.DTO;
 using Mango.Web.Services.IServices;
-using System.Reflection.Metadata;
 
 namespace Mango.Web.Services
 {
@@ -14,7 +12,7 @@ namespace Mango.Web.Services
         {
             this.clientFactory = clientFactory;
         }
-        public async Task<T> CreateProduct<T>(ProductDTO productDTO,string accessToken)
+        public async Task<T> CreateProduct<T>(ProductDTO productDTO, string accessToken)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
@@ -22,7 +20,7 @@ namespace Mango.Web.Services
                 Data = productDTO,
                 Url = Constants.ProductAPIBase + "api/products",
                 AccessToken = accessToken
-                
+
             });
         }
 
@@ -31,7 +29,7 @@ namespace Mango.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 APIType = Constants.APIType.POST,
-                Url = Constants.ProductAPIBase + "api/products/"+id,
+                Url = Constants.ProductAPIBase + "api/products/" + id,
                 AccessToken = accessToken
             });
         }
@@ -42,7 +40,7 @@ namespace Mango.Web.Services
             {
                 APIType = Constants.APIType.GET,
                 Url = Constants.ProductAPIBase + "api/products",
-                  AccessToken = accessToken
+                AccessToken = accessToken
             });
         }
 
@@ -52,7 +50,7 @@ namespace Mango.Web.Services
             {
                 APIType = Constants.APIType.GET,
                 Url = Constants.ProductAPIBase + "api/products/" + id,
-                  AccessToken = accessToken
+                AccessToken = accessToken
             });
         }
 
@@ -63,7 +61,7 @@ namespace Mango.Web.Services
                 APIType = Constants.APIType.PUT,
                 Data = productDTO,
                 Url = Constants.ProductAPIBase + "api/products",
-                   AccessToken = accessToken
+                AccessToken = accessToken
             });
         }
     }

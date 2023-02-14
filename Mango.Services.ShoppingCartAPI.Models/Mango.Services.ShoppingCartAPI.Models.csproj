@@ -6,4 +6,14 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Helpers\APIRequest.cs" />
+    <Compile Remove="Helpers\APIResponse.cs" />
+    <Compile Remove="Helpers\Constants.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>
