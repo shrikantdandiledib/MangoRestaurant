@@ -13,7 +13,7 @@ namespace IdentityServerHost.Quickstart.UI
         /// <summary>
         /// Checks if the redirect URI is for a native client.
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns> sd sad saddsd asdasdasd 
         public static bool IsNativeClient(this AuthorizationRequest context)
         {
             return !context.RedirectUri.StartsWith("https", StringComparison.Ordinal)
